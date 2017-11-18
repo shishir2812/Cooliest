@@ -22,4 +22,22 @@ void display(const FlowList &flow);
 */
 
 
+
+
+void addData(FlowList &flow, int &num);
+/*promises: prompts the user to enter an year and flow
+			if the year already exists, then gives an error
+			if the year doesn't exist in the record, then adds it to the
+			list and updates the record. 
+*/
+
+
+void removeData(FlowList &flow, int&num);
+/*promises: prompts the user to enter an year and flow
+			if the year doesn't exist in the record, then gives an error
+			if the year exists in the record, then removes it from the
+			list and updates the record. 
+*/
+
+
 #endif

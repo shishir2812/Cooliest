@@ -107,8 +107,24 @@ void pressEnter()
 
 void display(const FlowList &flow)
 {
-	
+	cout<<""<<endl;   
 	
 }
 
 
+void addData(FlowList &flow, int &num)
+{
+	int y;
+	double d;
+	cout << "Please enter a year" <<endl;
+	cin >> y;
+	
+	while (
+	
+	cout << "Please enter a flow" <<endl;
+	cin >> d;
+	// inserts year and flow in the list 
+	flow.insert(y,d);	
+}
+
+void removeData(Flowlist &flow, int &num)
