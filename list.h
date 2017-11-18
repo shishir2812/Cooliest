@@ -16,54 +16,57 @@ struct Node {
 	Node *next;
 };
 
-/*
-However you may need to add member function to get access to the item value
-of a node. For this purpose you can also add another data member of type Node*, 
-to be able to set it to different nodes when traversing through the list
-and haveaccess to the item in the node(this is just a suggestion and you can 
-come up with different solutions if you like). 
-*/
-
 class FlowList{
 public:
 //Default Constructor
-  FlowList();
-  //PROMISES: Creates empty list.
+	FlowList();
+	//PROMISES: Creates empty list.
 
 //Copy Constructor
-  FlowList(const FlowList& source);
-  //REQUIRES:
-  //PROMISES: To create a FlowList with the files content
+	FlowList(const FlowList& source);
+	//PROMISES: To create a FlowList
 
 //Assignment Operator  
-  FlowList& operator =(const FlowList& rhs);
-  //REQUIRES: 
-  //PROMISES: To create a FlowList with the files content
+	FlowList& operator =(const FlowList& rhs);
+	//PROMISES: To create a FlowList that is a copy of rhs.
  
 //Destructor
- // ~FlowList();
+	~FlowList();
 
+//Getters and Setters
+	int get_year() const;
+	// PROMISES: Return current cursor values years.
+	
+	double get_flow() const;
+	// PROMISES: Return current cursor values flow.
+	
 //Implementer Functions
-  void insert(const int& yearA, const double& flowA);
-  // PROMISES:
-  //    A node with a copy of item is added in a way that preserves the nondecreasing
-  //    order of items in nodes.
+	void insert(const int& yearA, const double& flowA);
+	//PROMISES: To insert a new node in the front of the FlowList.
 
-  void remove(const int& yearA, const double& flowA);
-  //  PROMISES:
-  //    If no node has an item matching itemA,list is unchanged.
-  //    Otherwise exactly one node with its item == itemA is removed.
+	int remove(const int& yearA);
+	//PROMISES: To search the FlowList for yearA, delete it if found and return 1.
+	//If not found, then return 0.
   
-  void display();
+	void display();
+	//PROMISES: To display the FlowList to the screen.
+	
+	int move_cursor();
+	//PROMISES: To move the cursor one node over and return 1 if the next node
+	//is not NULL. If NULL, then return 0.
+	
+	void reset_cursor();
+	//PROMISES: To reset cursor to the head of the FlowList.
   
 private:
-  Node *head;
-  Node *ptr;
-  //void destroy();
-  // Deallocate all nodes, set headM to zero.
+	Node *head;
+	Node *cursor;
+  
+	void destroy();
+	// Deallocate all nodes, set head to NULL.
 
-  void copy(const FlowList& source);
-  // List becomes copy of source.
+	void copy(const FlowList& source);
+	// FlowList becomes a copy of source.
 
 };
 #endif
