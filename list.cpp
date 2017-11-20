@@ -11,15 +11,14 @@ using namespace std;
 //Default Constructor
 	FlowList::FlowList()
 		{
-			head = NULL;
+			head = NULL ;
 			cursor = head;
 		}
 
 //Copy Constructor
 	FlowList::FlowList(const FlowList& source)
 		{
-			head = NULL;
-			copy(source);
+			this -> head = copy(source);
 			reset_cursor();
 		}
 
@@ -34,7 +33,7 @@ using namespace std;
 				destroy();
 				
 				//copy in rhs
-				copy(rhs);
+				this -> head = copy(rhs);
 			}
 			
 			reset_cursor();
@@ -44,9 +43,7 @@ using namespace std;
 //Destructor
 	FlowList::~FlowList()
 		{
-			
-			//destroy();
-			//cout << "SUCCESS" << endl;
+			destroy();	
 		}
 
 //Getters and Setters
@@ -65,25 +62,33 @@ using namespace std;
 		}
 		
 //Implementer Functions
+	
+	//Insert Function
 	void FlowList::insert(const int& yearA, const double& flowA)
 		{
 
 			Node* temp = new Node;
 			assert(temp != 0);
+			
 			temp -> item.year = yearA;
 			temp -> item.flow = flowA;
+			
 			temp -> next = head;
 			head = temp;
 			reset_cursor();
 		}
 
+	//Remove Function	
 	int FlowList::remove(const int& yearA)
 		{
 			Node* ptrprev;
 			
+			if(!head)
+				return 0;
+			
 			Node* ptr = head;
-				
-			if(ptr -> item.year == yearA)
+			
+			if((ptr -> item.year) == yearA)
 				{
 					head = head -> next;
 					delete ptr;
@@ -111,7 +116,8 @@ using namespace std;
 			reset_cursor();
 			return 0;
 		}
-
+		
+	//Display Function (For debugging purposes)
 	void FlowList::display()
 		{
 			Node* ptr =	head;
@@ -123,12 +129,7 @@ using namespace std;
 					cout << ptr -> item.year;
 					
 					cout << "    FLOW: ";
-					cout << ptr -> item.flow;
-					
-					cout << endl;
-					
-					cout << "Cursor is pointing to YEAR: ";
-					cout << cursor -> item.year;
+					cout << ptr -> item.flow;		
 					
 					cout << endl;
 					
@@ -138,6 +139,7 @@ using namespace std;
 			cout << endl;
 		}
 	
+	//Move_cursor Function
 	int FlowList::move_cursor()
 		{
 			if(cursor -> next)
@@ -149,58 +151,67 @@ using namespace std;
 			else
 				return 0;
 		}
-	
+		
+	//reset_cursor Function
 	void FlowList::reset_cursor()
 		{
 			 cursor = head;
 			
 		}
-		
+	
+	//destroy Function
 	void FlowList::destroy()
 		{
 
-			Node* ptr = head -> next;
-			//cout << "1ptr is at: " << ptr -> item.year << endl;
+			Node* current = this -> head;
 			
-			while(ptr)
+			if(!current)
+				return;
+			
+			while(current)
 				{	
-					//cout << "2ptr is at: " << ptr -> item.year << endl;
-					cout << "^DELETE YEAR: " << head -> item.year << endl;
-					delete head;
-					//cout << "3ptr is at: " << ptr -> item.year << endl;
-					head = ptr;
-					//cout << "4ptr is at: " << ptr -> item.year << endl;
-					ptr = head -> next;
-					//cout << "5ptr is at: " << ptr -> item.year << endl;
-
+					
+					Node* temp = current -> next;
+					delete current;
+					current = temp;
 				}
 			
-			cout << "DELETE YEAR: " << head -> item.year << endl;
-			delete head;
 			head = NULL;
 		}
 
-	void FlowList::copy(const FlowList& source)
+	//copy Function	
+	Node* FlowList::copy(const FlowList& source)
 		{
-			Node* move = source.head;
+			Node* current = source.head;
 			
-			while(move)
-				{
-					Node* temp = new Node;
-					
-					temp -> item.year = move -> item.year;
-					temp -> item.flow = move -> item.flow;
-					
-					temp -> next = this -> head;
-					
-					this -> head = temp;
-					
-					move = move -> next;
-					
-					if(!move)
-						temp -> next = NULL;
-					
-				}
+			if(current)
+			{
+				Node* temp = new Node;
 				
-			this -> head = source.head;
+				temp -> item.year = current -> item.year;
+				temp -> item.flow = current -> item.flow;
+							
+				temp -> next = NULL;
+					
+				Node* currenthead = temp;
+					
+				while(current)
+					{
+						temp = new Node;
+							
+						temp -> item.year = current -> item.year;
+						temp -> item.flow = current -> item.flow;
+							
+						temp -> next = NULL;
+							
+						current = current -> next;
+							
+					}
+
+				return currenthead;
+			}
+			
+			else
+				return NULL;
+			
 		}

@@ -65,8 +65,8 @@ private:
 	void destroy();
 	// Deallocate all nodes, set head to NULL.
 
-	void copy(const FlowList& source);
-	// FlowList becomes a copy of source.
+	Node* copy(const FlowList& source);
+	// The head of FlowList points to a copy of source.
 
 };
 #endif
