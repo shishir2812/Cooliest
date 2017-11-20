@@ -16,13 +16,19 @@ int menu();
 void pressEnter();
 //promises: waits for the user to press enter
 
-void display(const FlowList &flow);
+void display(FlowList &flow);
 /*promises: displays the list in ascending order based on the flow data.
 			Calls average and median function, and displays their data.
 */
 
-
-
+double average(FlowList &flow);
+/*promises: calculates average of the flow on the list 
+			and retuns a double value*/
+double median(FlowList &flow);
+/*promises: to calculate the median of the set.
+			If even number of nodes, returns the average of the two middle values
+			Else, returns the median.
+*/
 
 void addData(FlowList &flow, int &num);
 /*promises: prompts the user to enter an year and flow

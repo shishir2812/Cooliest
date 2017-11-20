@@ -8,6 +8,7 @@ Lab Section: B03
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -74,11 +75,9 @@ int readData(FlowList &flow)
 	while (inFlow >> y >> d)
 	{
 		flow.insert(y,d);
-		return num;
+		num++;
 	}
-	
-	
-	
+		
 	inFlow.close();
 		
 	return num;
@@ -91,7 +90,7 @@ int menu()
 	cout <<"1. Display flow list, average, and median"<< endl;
 	cout <<"2. Add data"<< endl;
 	cout <<"3. Save data into the file"<< endl;
-	cout <<"4. Remove data << endl" <<endl;	
+	cout <<"4. Remove data" <<endl;	
 	cout <<"5. Quit" <<endl;	
 	cout << "Enter your choice (1, 2, 3, 4, 5)"  <<endl;	
 	cin >> choice;
@@ -105,12 +104,45 @@ void pressEnter()
 }
 
 
-void display(const FlowList &flow)
+void display(FlowList &flow)
 {
-	cout<<""<<endl;   
-	
+	// title
+	cout<<"\n Year" << setw(35) << "Flow (in billions of cubic meter)"<<endl;   
+	cout<<"----- --------------------"<<endl;
+	//
+	flow.display();
+	double mean = average(flow);
+	cout << "The annual average flow is: "<< mean<< " million cubic meter";
+	double med = median(flow);
 }
 
+double average(FlowList &flow)
+{
+	double sum;
+	int num = 0; 
+	flow.reset_cursor();
+	while (flow.cursorM() -> next!= 0)
+	{	
+		sum+= flow.cursorM()->item.flow; 
+		flow.move_cursor();
+		num++;
+	}
+	
+	return sum/num;
+}
+	
+double median(FlowList &flow)
+{
+	double midpoint;
+	int num = 0;
+	flow.reset_cursor();
+	while (flow.cursorM()-> next!=0)
+	{
+		flow.move_cursor();
+		num++;
+	}	
+	cout << num <<endl;
+}	
 
 void addData(FlowList &flow, int &num)
 {
@@ -119,7 +151,6 @@ void addData(FlowList &flow, int &num)
 	cout << "Please enter a year" <<endl;
 	cin >> y;
 	
-	while (
 	
 	cout << "Please enter a flow" <<endl;
 	cin >> d;
@@ -127,4 +158,13 @@ void addData(FlowList &flow, int &num)
 	flow.insert(y,d);	
 }
 
-void removeData(Flowlist &flow, int &num)
+void removeData(FlowList &flow, int &num)
+{
+	
+	
+	
+	
+}
+
+
+
