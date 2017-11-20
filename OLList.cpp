@@ -1,10 +1,12 @@
 // OLList.cpp
 // ENCM 339  Lab 8 Exercise A and B
 
+
 #include <iostream>
 #include <stdlib.h>
-using namespace std;
 #include "OLList.h"
+using namespace std;
+
 
 OLList::OLList()
 : headM(0)
@@ -110,18 +112,19 @@ void OLList::destroy()
 	//doomed_node will be pointing to the nodes to be deleted 
 	
 	Node* doomed_node = headM;
-	headM = NULL;	
+			
 	
-	while(doomed_node-> next != NULL)
+	while(doomed_node!= NULL)
 	{
-		//temp is pointing to the doomed_node -> temp is deallocated
-		Node* temp = doomed_node;
-		doomed_node = doomed_node -> next;
-		cout << "deleting node:"<< temp -> item << "doomed_node is equal to" << doomed_node -> next<<endl;
-		delete temp;
 		
-	
+		Node* temp = doomed_node -> next;
+		delete doomed_node;
+		doomed_node = temp;
+			
 	}
+	delete doomed_node;
+	headM = NULL;
+
 
     
     
@@ -129,29 +132,28 @@ void OLList::destroy()
 
 void OLList::copy(const OLList& source)
 {
-   Node* move = source.headM;
-			
-			while(move)
-				{
-					Node* temp = new Node;
-					
-					temp -> item = move -> item;
-					
-					
-					temp -> next = this -> headM;
-					
-					this -> headM = temp;
-					
-					move = move -> next;
-					
-					if(!move)
-						temp -> next = NULL;
-					
-				}
-				
-			this -> headM = source.headM;
-		
 	
+	headM = new Node;
+	Node* current = source.headM; 
+	Node* temp = headM;		
+	//at this point current is pointing to the start of the original list		
+	while(current)
+	{
+		temp -> item = current -> item;
+		
+		if (current->next)
+		{
+					
+			temp -> next = new Node;	
+			temp = temp ->next;
+		}
+		current = current -> next;	
+		
+	}
+	temp -> next = NULL;
+				
+	
+				
 }
 
 
